@@ -1,38 +1,110 @@
-.App {
-  text-align: center;
+/* General reset for the body and html */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Ensures the body takes the full height of the screen */
+html, body {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4; /* Optional background color */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* App container styles */
+.app-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  height: 100%;
+  width: 100%;
 }
 
-.App-link {
-  color: #61dafb;
+/* Styling for each page's container */
+.container {
+  max-width: 300px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  text-align: left; /* Left align text */
+  padding: 20px; /* Padding around the form */
+  background-color: white; /* Optional background for the form */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional box shadow */
+  border-radius: 8px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Title styling */
+.title {
+  margin-bottom: 20px;
+  font-weight: bold;
+  text-align: center; /* Keep title centered */
+}
+
+/* Form container styling */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Label styling */
+.label {
+  display: flex;
+  flex-direction: row; /* Ensure label and input are in one row */
+  align-items: center; /* Align the label and input on the same line */
+  font-weight: bold;
+  margin-bottom: 5px; /* Optional spacing */
+}
+
+/* Input field styling */
+.input {
+  width: 100%;
+  padding: 8px;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 4px;
+  margin-top: 4px;
+}
+
+/* Button styling */
+.button {
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Link text styling */
+.linkText {
+  font-size: 0.9rem;
+  margin-top: 15px;
+}
+
+/* Styling for the links */
+.link {
+  color: #7a5af8;
+  text-decoration: none;
+}
+
+/* Error or message text styling */
+.message {
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+/* Prevent unnecessary scrollbar */
+html, body {
+  overflow: hidden; /* Remove scrollbar */
+}
+
+/* Ensure the label and input are on the same line without wrapping */
+.label {
+  white-space: nowrap; /* Prevent wrapping of the label */
 }

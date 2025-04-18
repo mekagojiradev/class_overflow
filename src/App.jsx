@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Register from "./Register";
-import Login from "./Login";  // Assuming you have a Login component
+import Login from "./Login";
 import Profile from "./Profile";
 import Home from "./Home";
 
@@ -12,10 +12,10 @@ const App = () => {
     <Router>
       <div className="app-container">
         <Routes>
+          <Route path="/" element={<Login />} /> {/* Default route should be the login page */}
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/Home" element={<Home />} />
-          {/* Added new route for the profile page */}
           <Route path="/profile" element={<Profile />} />
         </Routes>
       </div>

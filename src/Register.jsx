@@ -26,9 +26,8 @@ const Register = () => {
       password: formData.password,
       displayName: formData.displayName,
     };
-
     try {
-      const response = await fetch("http://localhost/ClassOverflow/api/register.php", {
+      const response = await fetch("http://localhost/class_overflow/api/register.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -41,7 +40,7 @@ const Register = () => {
       // Handle success or error based on the response from PHP server
       if (data.success) {
         console.log("User registered successfully");
-        navigate("/login");  // Redirect to login page
+        navigate("/Home"); // Redirect to login page
       } else {
         setError(data.error || "Error registering user");
       }
@@ -50,7 +49,6 @@ const Register = () => {
       setError("Something went wrong. Please try again.");
     }
   };
-
   return (
     <div className="container">
       <h2 className="title">Register</h2>

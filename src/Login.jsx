@@ -28,7 +28,7 @@ const Login = () => {
     try {
       // Call the login API or your logic here
       // fetch the path where PHP server is running
-      const response = await fetch("http://localhost/class_overflow/api/register.php", {
+      const response = await fetch("http://localhost/class_overflow/api/login.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -38,13 +38,11 @@ const Login = () => {
 
       const result = await response.json();
 
-      if (result) {
+      if (result.success) {
 
-        // For now, let's assume the login is successful:
         console.log("Login successful");
         
-        // Redirect to another page after successful login (e.g., a dashboard):
-        navigate("/Home"); // You can replace this with your actual login logic
+        navigate("/Home");
 
       }
     } catch (error) {

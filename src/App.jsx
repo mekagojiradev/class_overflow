@@ -4,6 +4,7 @@ import Register from "./Register";
 import Login from "./Login";
 import Profile from "./Profile";
 import Home from "./Home";
+import Forum from "./Forum";
 
 import './App.css';
 
@@ -17,6 +18,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/Home" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/forum" element={<Profile />} />
         </Routes>
       </div>
     </Router>

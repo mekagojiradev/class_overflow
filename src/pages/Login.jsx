@@ -47,6 +47,12 @@ const Login = () => {
         localStorage.setItem("user", JSON.stringify(result.user));
         navigate("/home");
 
+      } 
+      // else specify the error message from login.php 
+      else {
+        if (result.error === "User not found.") {
+          alert("You need to register your account first before logging in.");
+        }
       }
     } catch (error) {
       console.error("There was an error during login", error);

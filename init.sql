@@ -1,6 +1,8 @@
 -- Drop tables in reverse dependency order
 DROP TABLE IF EXISTS likes_response;
 DROP TABLE IF EXISTS likes_question;
+DROP TABLE IF EXISTS dislikes_response;
+DROP TABLE IF EXISTS dislikes_question;
 DROP TABLE IF EXISTS user_classes;
 DROP TABLE IF EXISTS school_classes;
 DROP TABLE IF EXISTS responses;
@@ -59,6 +61,7 @@ CREATE TABLE questions (
     school_id INT,
     class_id INT,
     like_count INT DEFAULT 0,
+    dislike_count INT DEFAULT 0,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
     FOREIGN KEY (school_id) REFERENCES schools(id) ON DELETE CASCADE,
@@ -100,3 +103,22 @@ CREATE TABLE likes_response (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (response_id) REFERENCES responses(id) ON DELETE CASCADE
 );
+
+-- Dislikes on Questions
+CREATE TABLE dislikes_question (
+    user_id INT,
+    question_id INT,
+    PRIMARY KEY (user_id, question_id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE
+);
+
+-- Dislikes on Responses
+CREATE TABLE dislikes_response (
+    user_id INT,
+    response_id INT,
+    PRIMARY KEY (user_id, response_id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (response_id) REFERENCES responses(id) ON DELETE CASCADE
+);
+

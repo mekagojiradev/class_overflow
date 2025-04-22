@@ -32,6 +32,7 @@ const App = () => {
           <Route path="/Home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/forum" element={<ProtectedRoute><Forum /></ProtectedRoute>} />
+          <Route path="*" element={<h1>404 - Page Not Found</h1>} />
         </Routes>
       </div>
     </Router>

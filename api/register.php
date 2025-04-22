@@ -22,14 +22,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 $data = json_decode(file_get_contents("php://input"), true);
 
 // Check if all required fields are provided
-if (isset($data['email']) && isset($data['password']) && isset($data['displayName'])) {
+if (isset($data['email']) && isset($data['password']) && isset($data['displayName']) && isset($data['college'])) {
     $email = $data['email'];
     $password = password_hash($data['password'], PASSWORD_DEFAULT); // Hash the password
     $username = $data['displayName'];
+    $college = $data['college'];
 
     // Prepare the SQL query to insert the new user
-    $stmt = $conn->prepare("INSERT INTO users (username, password_hash, email) VALUES (?, ?, ?)");
-    $stmt->bind_param("sss", $username, $password, $email); // Bind the parameters
+    $stmt = $conn->prepare("INSERT INTO users (username, password_hash, email, school) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $username, $password, $email, $college); // Bind the parameters
 
     try {
         $stmt->execute(); // Execute the query

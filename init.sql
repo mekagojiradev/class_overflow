@@ -40,6 +40,8 @@ CREATE TABLE users (
     email VARCHAR(255) NOT NULL UNIQUE,
     school_id INT,
     dark_mode BOOLEAN DEFAULT FALSE,
+    -- added this instead of using school id
+    school VARCHAR(255) NOT NULL,
     FOREIGN KEY (school_id) REFERENCES schools(id) ON DELETE SET NULL
 );
 

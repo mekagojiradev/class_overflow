@@ -11,7 +11,7 @@ if (isset($data['email']) && isset($data['password'])) {
     $password = $data['password'];
 
     // Check if user exists
-    $stmt = $conn->prepare("SELECT id, username, password_hash FROM users WHERE email = ?");
+    $stmt = $conn->prepare("SELECT id, username, password_hash, school FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -22,7 +22,7 @@ if (isset($data['email']) && isset($data['password'])) {
         // Verify password
         if (password_verify($password, $user['password_hash'])) {
             // Successful login
-            echo json_encode(["success" => true, "user" => ["id" => $user['id'], "username" => $user['username']]]);
+            echo json_encode(["success" => true, "user" => ["id" => $user['id'], "username" => $user['username'], "college" => $user['school']]]);
         } else {
             echo json_encode(["success" => false, "error" => "Incorrect password."]);
         }

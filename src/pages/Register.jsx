@@ -7,6 +7,7 @@ const Register = () => {
     email: "",
     password: "",
     displayName: "",
+    college: "",
   });
 
   const [error, setError] = useState("");  // For error handling
@@ -25,6 +26,7 @@ const Register = () => {
       email: formData.email,
       password: formData.password,
       displayName: formData.displayName,
+      college: formData.college,
     };
     try {
       const response = await fetch("http://localhost/class_overflow/api/register.php", {
@@ -88,6 +90,17 @@ const Register = () => {
                 name="password"
                 className="input"
                 value={formData.password}
+                onChange={handleChange}
+                required
+              />
+            </label>
+            <label className="label">
+              College:
+              <input
+                type="text"
+                name="college"
+                className="input"
+                value={formData.college}
                 onChange={handleChange}
                 required
               />

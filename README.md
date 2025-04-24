@@ -2,6 +2,10 @@
 # class_overflow
 Class Specific Forumns
 =======
+
+use 'npm install react-icons' to install react icons (we used them on the forum page)
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

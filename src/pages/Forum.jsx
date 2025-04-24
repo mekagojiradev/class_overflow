@@ -50,7 +50,7 @@ const Forum = ({posts, setPosts}) => {
                     <div style={{display:'flex', justifyContent: 'space-between'}}>
                         <h2 className='postHeading'>{post.username}</h2>
                         <h2 className='postHeading'>{post.college}</h2>
-                        <h2 className='postHeading'>{post.time}</h2>
+                        <h2 className='postHeading'>{post.date}</h2>
                     </div>
                     <p>{post.content}</p>
                     <button className='show-response-button'>Show Responses</button>

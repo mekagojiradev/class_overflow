@@ -18,7 +18,7 @@ const Post = ({setPosts}) => {
 
         } 
         // creates an object called newPost
-        const newPost = { username, college, content, time: new Date().toLocaleDateString() }; 
+        const newPost = { username, college, content, date: new Date().toLocaleDateString() }; 
         
         setPosts((newPost)); // add post to the list
         setUsername("");

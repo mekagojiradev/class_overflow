@@ -1,6 +1,6 @@
 .postHeading{
     color:black;
-    font-size: 30px;
+    font-size: 15px;
     margin: 10px;
 }
 
@@ -10,4 +10,63 @@
     max-width: 500px;
     align-items: center;
     justify-content: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
+
+.forum-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.search-input {
+    width: 400px;
+    margin: 10px;
+    padding: 10px 20px;
+    border-radius: 30px;
+
+}
+
+.search-button, .filter-options {
+    border-radius: 30px;
+    margin: 10px;
+}
+
+.search-button:hover, .filter-options:hover {
+    background-color: green;
+}
+
+.create-posts-text, .recent-posts-text {
+    margin-right: 35rem; /* makes text message "recenet post" to left side */
+    font-weight: bold;
+   
+}
+
+.create-posts-line, .recent-posts-line {
+    width: 570px;
+    margin-left: 7rem;
+    border-bottom: 2px solid black;
+}
+
+.show-response-button {
+    width: 100%;
+    margin: 10px;
+}
+.show-response-button:hover {
+    background-color: gray;
+}
+
+.like-button:hover {
+    background-color: green;
+}
+
+.dislike-button:hover {
+    background-color: red;
+}
+
+.reply-button:hover {
+    background-color: gray;
+}
+

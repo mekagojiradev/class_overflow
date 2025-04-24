@@ -1,26 +1,69 @@
 import '../styles/Post.css';
+import { useState } from 'react';
 
-const Post = () => {
+const Post = ({setPosts}) => {
+    // Use useState to store and manage posts
+    const [username, setUsername] = useState("");
+    const [college, setCollege] = useState("");
+    const [content, setContent] = useState("");
+
+    // handle post submission 
+    function handleSubmit (event) {
+        event.preventDefault(); // Prevents page reload
+
+        // Prevent submission if title, author, or content fields are empty
+        if (username.length === 0 || college.length === 0 || content.length === 0){
+            // Display an error message if validation fails.
+            alert("Did not fill in username, college, or content fields ")
+
+        } 
+        // creates an object called newPost
+        const newPost = { username, college, content, time: new Date().toLocaleString() }; 
+        
+        setPosts((newPost)); // add post to the list
+        setUsername("");
+        setCollege("");
+        setContent("");
+
+    }
 
     return (
-        <>
-            <div className="container post">
-                <div style={{display: 'flex'}}>
-                    <h2 className='postHeading'>Username</h2>
-                    <h2 className='postHeading'>College</h2>
-                    <h2 className='postHeading'>4/23/2025</h2>
-                </div>
-                <p>Example text, Example text, Example text,Example text,Example text,Example text,Example text,Example text,</p>
-                <button style={{width: '100%', margin: '10px'}}>Show Responses</button>
-                <div style={{display: 'flex'}}>
-                    <button>Like</button>
-                    <button>Dislike</button>
-                    <button>Reply</button>
-                </div>
-            </div>
-        </>
+
+        <div>
+            <div className='create-posts-text'> Create Posts</div>
+            <div className='create-posts-line'></div>
+            
+            <form onSubmit={handleSubmit}>
+            <input
+                type="text" 
+                value={username} 
+                onChange={(event) => setUsername(event.target.value)} 
+                placeholder="Enter the username">                
+            </input>
+            <br/>
+
+            <input
+                type="text" 
+                value={college} 
+                onChange={(event) => setCollege(event.target.value)} 
+                placeholder="Enter the college">
+            </input>
+            <br/>
+
+            <textarea
+                type="text" 
+                value={content} 
+                onChange={(event) => setContent(event.target.value)} 
+                placeholder="Enter the content">
+            </textarea>
+            <br/>
+            <button type="submit">Submit</button>
+            </form>
+        </div>
+
     );
 
 };
 
 export default Post;
+

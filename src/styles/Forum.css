@@ -1,0 +1,38 @@
+.forum-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.search-button, .filter-button {
+    margin: 10px;
+    padding: 10px;
+    margin-left: 0px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: .3s;
+    transition-timing-function: ease-out;
+    border-radius: 30px;
+    margin: 10px;
+}
+
+.search-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.search-input {
+    width: 80%;
+    padding: 12px;
+    border-radius: 30px;
+}
+.search-button:hover, .filter-button:hover {
+    background-color: gray;
+}
+

@@ -1,76 +1,53 @@
+/* text in the header */
 .postHeading{
-    color:black;
-    font-size: 15px;
+    font-size: 20px;
     margin: 10px;
+    margin-left: 0px;
 }
 
-.container.post{
+/* the div for the header and info */
+.postHeader, .postInfo {
     display: flex;
-    flex-direction: column;
-    max-width: 500px;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
 }
 
-.forum-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.show-response-button{
+    width: 100%;
+}
+
+.show-response-button, .reply-button, .like-button, .dislike-button, .delete-button {
+    margin: 10px;
     padding: 10px;
+    margin-left: 0px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: .3s;
+    transition-timing-function: ease-out;
+}
+.reply-button {
+    margin-right: 0px;
 }
 
-.search-input {
-    width: 400px;
-    margin: 10px;
-    padding: 10px 20px;
-    border-radius: 30px;
-
-}
-
-.search-button, .filter-options {
-    border-radius: 30px;
-    margin: 10px;
-}
-
-.search-button:hover, .filter-options:hover {
+.like-button {
     background-color: green;
 }
-
-.create-posts-text, .recent-posts-text {
-    margin-right: 35rem; /* makes text message "recenet post" to left side */
-    font-weight: bold;
-   
-}
-
-.create-posts-line, .recent-posts-line {
-    width: 570px;
-    margin-left: 7rem;
-    border-bottom: 2px solid black;
-}
-
-.show-response-button {
-    width: 100%;
-    margin: 10px;
+.dislike-button {
+    background-color: red;
 }
 .show-response-button:hover {
     background-color: gray;
 }
-
 .like-button:hover {
-    background-color: green;
+    background-color: rgb(0, 78, 0);
 }
 
 .dislike-button:hover {
-    background-color: red;
+    background-color: rgb(114, 0, 0);
 }
-
-.reply-button:hover {
+.reply-button:hover, .delete-button:hover {
     background-color: gray;
 }
-
-.delete-button:hover {
-    background-color: gray;
-}
-

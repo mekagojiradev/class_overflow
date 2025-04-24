@@ -1,0 +1,13 @@
+.postHeading{
+    color:black;
+    font-size: 30px;
+    margin: 10px;
+}
+
+.container.post{
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    align-items: center;
+    justify-content: center;
+}

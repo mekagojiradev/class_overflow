@@ -11,7 +11,7 @@ const Forum = ({posts, setPosts}) => {
     })
 
     const handleAddPost = (newPost) => {
-        setForumPosts(prevPosts => [...prevPosts, {...newPost, id: Date.now()}]);
+        setForumPosts(prevPosts => [...prevPosts, {...newPost}]);
     };
 
     // remove the selected post
@@ -50,7 +50,7 @@ const Forum = ({posts, setPosts}) => {
                     <div style={{display:'flex', justifyContent: 'space-between'}}>
                         <h2 className='postHeading'>{post.username}</h2>
                         <h2 className='postHeading'>{post.college}</h2>
-                        <h2 className='postHeading'>{post.date}</h2>
+                        <h2 className='postHeading'>{post.time}</h2>
                     </div>
                     <p>{post.content}</p>
                     <button className='show-response-button'>Show Responses</button>
@@ -59,7 +59,7 @@ const Forum = ({posts, setPosts}) => {
                         <button className = 'dislike-button'>Dislike</button>
                         <button className = 'reply-button'>Reply</button>
                     </div>
-                    <button onClick={() => handleDelete(post.id)}> Delete</button>
+                    <button className = 'delete-button' onClick={() => handleDelete(post.id)}> Delete</button>
                 </div>
             ))}
         </>

@@ -3,6 +3,7 @@ import '../App.css';
 import '../styles/Forum.css';
 import Post from '../components/Post.jsx';
 import { FaSearch, FaFilter } from 'react-icons/fa';
+import Response from '../components/Response.jsx';
 
 const Forum = () => {
     return (
@@ -16,6 +17,9 @@ const Forum = () => {
                 </div>
                 <hr className='line'></hr>
                 <Post></Post>
+                <Response></Response> 
+                
+                
             </div>
         </>
 

@@ -2,7 +2,7 @@ import '../styles/Post.css';
 import '../App.css';
 import { FaThumbsUp, FaThumbsDown, FaReply, FaTimes } from 'react-icons/fa';
 
-const NewPost = () => {
+const Post = () => {
 
     return (
         <div>
@@ -37,4 +37,4 @@ const NewPost = () => {
 
 };
 
-export default NewPost;
+export default Post;

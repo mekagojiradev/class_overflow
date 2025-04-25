@@ -5,22 +5,26 @@ import '../App.css';
 import '../styles/Profile.css';
 
 const Profile = () => {
-
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
-    const [college, setCollege] = useState("");
+    const [college, setCollege] = useState("");  // College or School, depending on what you save
 
     // only do this once after the component is rendered
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"));
+        console.log("User object from localStorage:", user); // Debugging step to check the object structure
+
         if (user) {
             setUsername(user.username);
-            setCollege(user.college);
+            setCollege(user.school);  // Set the college (school) value from localStorage
+        } else {
+            navigate("/login");  // Redirect to login if the user is not logged in
         }
-    }, []);
+    }, [navigate]);
 
     function logOut() {
         localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("user");
         navigate("/login");
     }
 
@@ -39,17 +43,14 @@ const Profile = () => {
                     </div>
                     <br />
                     <div className='container' style={{ display: 'flex', alignItems: 'center' }}>
-                        <p className='normal'>College: {college}</p>
+                        <p className='normal'>College: {college}</p>  {/* Displays the school name */}
                     </div>
                     <hr className='line'></hr>
                     <p className='normal'>Post History</p>
-                    
                 </div>
             </div>
         </>
-
     );
-
 };
 
 export default Profile;

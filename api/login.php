@@ -1,5 +1,6 @@
 <?php
-require 'db.php';
+require 'db.php'; // Database connection
+
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Content-Type: application/json");
@@ -10,8 +11,13 @@ if (isset($data['email']) && isset($data['password'])) {
     $email = $data['email'];
     $password = $data['password'];
 
-    // Check if user exists
-    $stmt = $conn->prepare("SELECT id, username, password_hash, school FROM users WHERE email = ?");
+    // Query to join users table with schools table to fetch school name
+    $stmt = $conn->prepare("
+        SELECT users.id, users.username, users.password_hash, users.school_id, schools.name AS school
+        FROM users
+        JOIN schools ON users.school_id = schools.id
+        WHERE users.email = ?
+    ");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -22,14 +28,25 @@ if (isset($data['email']) && isset($data['password'])) {
         // Verify password
         if (password_verify($password, $user['password_hash'])) {
             // Successful login
-            echo json_encode(["success" => true, "user" => ["id" => $user['id'], "username" => $user['username'], "college" => $user['school']]]);
+            echo json_encode([
+                "success" => true, 
+                "user" => [
+                    "id" => $user['id'], 
+                    "username" => $user['username'], 
+                    "school" => $user['school'],  // School name from the query
+                    "school_id" => $user['school_id'], // School ID
+                ]
+            ]);
         } else {
+            // Incorrect password
             echo json_encode(["success" => false, "error" => "Incorrect password."]);
         }
     } else {
+        // User not found
         echo json_encode(["success" => false, "error" => "User not found."]);
     }
 } else {
+    // Missing email or password
     echo json_encode(["success" => false, "error" => "Missing email or password."]);
 }
 ?>

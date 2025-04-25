@@ -39,19 +39,25 @@ const Login = () => {
       const result = await response.json();
 
       if (result.success) {
-
         console.log("Login successful");
-        // store whether a user is logged in or not
-        localStorage.setItem("isLoggedIn", "true");
-        // store the user's information as a json
-        localStorage.setItem("user", JSON.stringify(result.user));
-        navigate("/home");
 
-      } 
-      // else specify the error message from login.php 
-      else {
+        // Store whether a user is logged in or not
+        localStorage.setItem("isLoggedIn", "true");
+
+        // Store the user's information as a JSON, including the school_id
+        localStorage.setItem("user", JSON.stringify({
+          id: result.user.id,
+          username: result.user.username,
+          school: result.user.school,  // Saving school name here
+          school_id: result.user.school_id
+        }));        
+
+        navigate("/home");
+      } else {
         if (result.error === "User not found.") {
           alert("You need to register your account first before logging in.");
+        } else {
+          alert(result.error || "Login failed.");
         }
       }
     } catch (error) {
@@ -61,44 +67,42 @@ const Login = () => {
   };
 
   return (
-    <>
-      <div className="page-content">
-        <div className="container">
-          <h2 className="title">Login</h2>
-          {error && <p className="message" style={{ color: "red" }}>{error}</p>}
-          <form className="form" onSubmit={handleSubmit}>
-            <div className="label">
-              <label htmlFor="email">Email:</label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="input"
-              />
-            </div>
-            <div className="label">
-              <label htmlFor="password">Password:</label>
-              <input
-                type="password"
-                name="password"
-                id="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                className="input"
-              />
-            </div>
-            <button type="submit" className="button">Login</button>
-          </form>
-          <p className="linkText">
-            Don't have an account? <Link to="/register" className="link">Register</Link>
-          </p>
-        </div>
+    <div className="page-content">
+      <div className="container">
+        <h2 className="title">Login</h2>
+        {error && <p className="message" style={{ color: "red" }}>{error}</p>}
+        <form className="form" onSubmit={handleSubmit}>
+          <div className="label">
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="input"
+            />
+          </div>
+          <div className="label">
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              className="input"
+            />
+          </div>
+          <button type="submit" className="button">Login</button>
+        </form>
+        <p className="linkText">
+          Don't have an account? <Link to="/register" className="link">Register</Link>
+        </p>
       </div>
-    </>
+    </div>
   );
 };
 

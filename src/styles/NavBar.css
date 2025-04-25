@@ -1,28 +1,28 @@
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: white;
-    padding: 5px 2px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 100%;
-  }
-  
-  .nav-left button,
-  .nav-right button {
-    margin: 10px;
-    background: none;
-    border: none;
-    color: #333;
-    font-weight: 600;
-    cursor: pointer;
-  }
-  
-  .nav-left button:last-child {
-    margin-right: 0;
-  }
-  
-  nav button:hover {
-    color: green;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 5px 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.nav-left button,
+.nav-right button {
+  margin: 10px;
+  background: none;
+  border: none;
+  color: #333;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.nav-left button:last-child {
+  margin-right: 0;
+}
+
+nav button:hover {
+  color: green;
+}
   

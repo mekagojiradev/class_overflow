@@ -1,24 +1,38 @@
 import '../styles/Post.css';
+import '../App.css';
+import { FaThumbsUp, FaThumbsDown, FaReply, FaTimes } from 'react-icons/fa';
 
 const Post = () => {
 
     return (
-        <>
-            <div className="container post">
-                <div style={{display: 'flex'}}>
-                    <h2 className='postHeading'>Username</h2>
-                    <h2 className='postHeading'>College</h2>
-                    <h2 className='postHeading'>4/23/2025</h2>
+        <div>
+            <div className='container wide'>
+                <div className='postHeader'>
+                    <div className='postHeader left'>
+                        <h2 className='postHeading'>Username</h2>
+                        <h2 className='postHeading' style={{color: 'rgb(82, 82, 82)'}}>(College)</h2>
+                    </div>
+                    <div className='postHeader right'>
+                        <h2 className='postHeading' style={{color: 'rgb(82, 82, 82)'}}>Date</h2>
+                    </div>
                 </div>
-                <p>Example text, Example text, Example text,Example text,Example text,Example text,Example text,Example text,</p>
-                <button style={{width: '100%', margin: '10px'}}>Show Responses</button>
-                <div style={{display: 'flex'}}>
-                    <button>Like</button>
-                    <button>Dislike</button>
-                    <button>Reply</button>
+                <p className='normal'>Content content Content contentContent contentContent contentContent contentContent contentContent contentContent contentontent content Content contentContent contentContent contentContent contentContent contentContent contentContent contentontent content Content contentContent contentContent contentContent contentContent contentContent contentContent contentontent content Content contentContent contentContent contentContent contentContent contentContent contentContent contentontent content Content contentContent contentContent contentContent contentContent contentContent contentContent contentontent content Content contentContent contentContent contentContent contentContent contentContent contentContent content</p>
+                <button className='show-response-button'>Show Responses</button>
+                <div className='postInfo'>
+                    <div className='postInfo left'>
+                        <button className = 'like-button'><FaThumbsUp /></button>
+                        <button className = 'dislike-button'><FaThumbsDown /></button>
+                    </div>
+                    <div className='postInfo right'>
+                        <button className = 'reply-button'><FaReply /></button>
+                    </div>
+                </div>
+                <div style={{display: 'flex', justifyContent: 'center'}}>
+                    <button className = 'delete-button'><FaTimes /></button>
                 </div>
             </div>
-        </>
+        </div>
+
     );
 
 };

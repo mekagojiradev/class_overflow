@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "../App.css";
 
 const FloatingAddQuestionButton = () => {
+  const navigate = useNavigate();
   const [showForm, setShowForm] = useState(false); // Toggle form visibility
   const [formData, setFormData] = useState({
     content: "",

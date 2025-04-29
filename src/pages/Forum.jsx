@@ -1,10 +1,10 @@
 import NavBar from '../components/NavBar.jsx';
+import Post from '../components/Post.jsx';
+import CreatePostButton from '../components/CreatePostButton.jsx';
 import '../App.css';
 import '../styles/Forum.css';
-import Post from '../components/Post.jsx';
 import { FaSearch, FaFilter } from 'react-icons/fa';
 // import Response from '../components/Response.jsx';
-import CreatePostButton from '../components/CreatePostButton.jsx';
 import { useState, useEffect, useCallback } from 'react';
 
 const Forum = () => {

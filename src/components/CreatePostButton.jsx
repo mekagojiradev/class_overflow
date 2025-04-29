@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "../App.css";
 
-const FloatingAddQuestionButton = () => {
+const FloatingAddQuestionButton = ({handlePostCreation}) => {
   const [showForm, setShowForm] = useState(false); // Toggle form visibility
   const [formData, setFormData] = useState({
     content: "",
@@ -76,6 +76,12 @@ const FloatingAddQuestionButton = () => {
         console.log("Post created successfully");
         // Optionally redirect after success, if desired
         setShowForm(false);
+
+        if (handlePostCreation) {
+          // call the function to re-fetch the post
+          handlePostCreation(); // don't need to refresh the page to see the post after creation
+        }
+        
       } else {
         setError(data.error || "Error creating post");
       }

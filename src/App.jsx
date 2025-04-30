@@ -13,10 +13,22 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Home from "./pages/Home";
 import Forum from "./pages/Forum";
-
+import { useEffect } from "react";
 import './App.css';
 
 const App = () => {
+
+  // this has to be in app.jsx so that dark mode is applied to the entire website (refreshing issues)
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user?.dark_mode === 1) {
+      document.body.classList.add("dark-mode");
+    }
+    else {
+      document.body.classList.remove("dark-mode");
+    }
+  }, []);
+
   return (
     <Router>
       <div className="app-container">

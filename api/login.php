@@ -13,7 +13,7 @@ if (isset($data['email']) && isset($data['password'])) {
 
     // Query to join users table with schools table to fetch school name
     $stmt = $conn->prepare("
-        SELECT users.id, users.username, users.password_hash, users.school_id, schools.name AS school
+        SELECT users.id, users.username, users.password_hash, users.school_id, users.dark_mode, schools.name AS school
         FROM users
         JOIN schools ON users.school_id = schools.id
         WHERE users.email = ?
@@ -35,6 +35,7 @@ if (isset($data['email']) && isset($data['password'])) {
                     "username" => $user['username'], 
                     "school" => $user['school'],  // School name from the query
                     "school_id" => $user['school_id'], // School ID
+                    "dark_mode" => $user['dark_mode'],
                 ]
             ]);
         } else {

@@ -2,7 +2,11 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 10px;
+    width: 100%;
+    max-width: 1000px;
+    min-width: 250px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
 .search-button, .filter-button {
@@ -31,8 +35,14 @@
     padding: 12px;
     border-radius: 30px;
 }
+body.dark-mode .search-input{
+    background: rgb(56, 56, 56);
+}
+
 .search-button:hover, .filter-button:hover {
-    background-color: gray;
+    background-color: rgb(46, 46, 46);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-1.2px);
 }
 
 .container.wide.response {

@@ -49,8 +49,17 @@ const Login = () => {
           id: result.user.id,
           username: result.user.username,
           school: result.user.school,  // Saving school name here
-          school_id: result.user.school_id
-        }));        
+          school_id: result.user.school_id,
+          dark_mode: result.user.dark_mode
+        }));
+
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (user?.dark_mode === 1) {
+          document.body.classList.add("dark-mode");
+        }
+        else {
+          document.body.classList.remove("dark-mode");
+        }
 
         navigate("/home");
       } else {

@@ -6,17 +6,17 @@ const Post = ({username, schoolName, createdAt, content}) => {
 
     return (
         <div>
-            <div className='container wide'>
+            <div className='container wide' style={{margin: '5px'}}>
                 <div className='postHeader'>
                     <div className='postHeader left'>
                         <h2 className='postHeading'>{username}</h2>
-                        <h2 className='postHeading' style={{color: 'rgb(82, 82, 82)'}}>({schoolName})</h2>
+                        <h2 className='postSubheading'>({schoolName})</h2>
                     </div>
                     <div className='postHeader right'>
-                        <h2 className='postHeading' style={{color: 'rgb(82, 82, 82)'}}>{createdAt}</h2>
+                        <h2 className='postSubheading'>{createdAt}</h2>
                     </div>
                 </div>
-                <p className='normal'>{content}</p>
+                <p className='normal post'>{content}</p>
                 <button className='show-response-button'>Show Responses</button>
                 <div className='postInfo'>
                     <div className='postInfo left'>
@@ -24,11 +24,11 @@ const Post = ({username, schoolName, createdAt, content}) => {
                         <button className = 'dislike-button'><FaThumbsDown /></button>
                     </div>
                     <div className='postInfo right'>
-                        <button className = 'reply-button'><FaReply /></button>
+                        <button className = 'button'><FaReply /></button>
                     </div>
                 </div>
                 <div style={{display: 'flex', justifyContent: 'center'}}>
-                    <button className = 'delete-button'><FaTimes /></button>
+                    <button className = 'button'><FaTimes /></button>
                 </div>
             </div>
         </div>

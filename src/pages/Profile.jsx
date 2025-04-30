@@ -1,8 +1,9 @@
 import NavBar from '../components/NavBar.jsx';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import '../App.css';
 import '../styles/Profile.css';
+import PostHistory from '../components/PostHistory.jsx';
 
 const Profile = () => {
     const navigate = useNavigate();
@@ -10,6 +11,73 @@ const Profile = () => {
     const [college, setCollege] = useState("");  // College or School, depending on what you save
     // control whether the checkbox is checked or not
     const [darkMode, setDarkMode] = useState(false);
+
+    // for the user post history
+    const [userPosts, setUserPosts] = useState([]); // state to hold the fetched post
+    const [loading, setLoading] = useState(true); // state to track loading status
+    const [error, setError] = useState(""); // state to track any fetch errors
+
+    // Use useCallback to avoid re-creating the fetchPosts function
+    const fetchPosts = useCallback(async () => {
+        const user = JSON.parse(localStorage.getItem("user"));
+
+        try {
+            const response = await fetch(`http://localhost/class_overflow/api/post_history.php?user_id=${user.id}`); // show post from only the user
+            const data = await response.json();
+
+            if (data.success) {
+                setUserPosts(data.posts); // update the post state with fetched data
+            } else {
+                setError(data.error || 'Failed to fetch post');
+            }
+        } catch (error){ // catch any error during the fetch process
+            console.error('Error fetching post:', error);
+            setError('Could not fetch post. Try again later')
+        } finally {
+            setLoading(false); // loading is finished if it was successful in getting the post or there was an error
+        }
+        
+    }, []); // left an empty array since it does not depend on external variable
+
+    useEffect(() => {
+        fetchPosts();
+    }, [fetchPosts]); // have a dependency array to re-run the code if the fetchPosts function changes
+
+
+    // function to delete post by user id
+    const handleDeletePost = async (post_id) => {
+        const user = JSON.parse(localStorage.getItem("user"));
+
+        // confirmation of the deletion
+        var delete_choice = window.confirm("Are you sure you want to delete the post?");
+
+        if(!delete_choice) {
+            return;
+        }
+
+        const response = await fetch("http://localhost/class_overflow/api/delete_post.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                user_id: user.id,
+                post_id: post_id
+            }),
+        })
+
+        const result = await response.json();
+
+        if (result.success) {
+            // deletes the post
+            setUserPosts(prevPost => prevPost.filter(post => post.question_id !== post_id));
+            console.log("Post deleted");
+        }
+        else {
+            console.error("Failed to delete post:", result.error);
+        }
+
+    };
 
     // only do this once after the component is rendered
     useEffect(() => {
@@ -90,6 +158,30 @@ const Profile = () => {
                     </div>
                     <hr className='line'></hr>
                     <p className='normal'>Post History</p>
+                    { loading ? (
+                        <div>Loading the posts...</div>
+                    ) : error ? (
+                        <div>Error: {error}</div>
+                    ) : (
+                        userPosts.map((post) => (
+                            // add a fixed width constraint in profile.css
+                            <div key={post.question_id} className='post-history'> 
+                                <PostHistory
+                                // get the info from the database and pass them as props for PostHistory.jsx
+                                username = {post.title}// if user want to display their username or just anonymous
+                                schoolName = {post.school_name}// school name
+                                createdAt = {post.created_at} // when the post was created
+                                content = {post.content} // post content
+
+                                // need to pass both as props
+                                postId = {post.question_id}
+                                onChange = {handleDeletePost}
+                                ></PostHistory>
+
+                            </div>
+
+                        )))}
+    
                 </div>
             </div>
         </>

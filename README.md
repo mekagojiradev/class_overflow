@@ -1,10 +1,7 @@
-<<<<<<< HEAD
 # class_overflow
 Class Specific Forumns
-=======
 
 use 'npm install react-icons' to install react icons (we used them on the forum page)
-
 
 # Getting Started with Create React App
 

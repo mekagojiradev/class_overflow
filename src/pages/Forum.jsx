@@ -4,7 +4,6 @@ import CreatePostButton from '../components/CreatePostButton.jsx';
 import '../App.css';
 import '../styles/Forum.css';
 import { FaSearch, FaFilter } from 'react-icons/fa';
-// import Response from '../components/Response.jsx';
 import { useState, useEffect, useCallback } from 'react';
 
 const Forum = () => {
@@ -61,7 +60,6 @@ const Forum = () => {
                         content = {post.content} // post content
                         ></Post>
                     )))}
-                {/* <Response></Response>  */}
                 <CreatePostButton handlePostCreation = {fetchPosts} />  {/* pass the fetchPosts function as a prop*/}
             </div>
         </>

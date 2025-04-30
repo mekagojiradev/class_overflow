@@ -1,8 +1,8 @@
 import '../styles/Post.css';
 import '../App.css';
-import { FaThumbsUp, FaThumbsDown, FaReply } from 'react-icons/fa';
+import { FaTimes } from 'react-icons/fa';
 
-const Post = ({username, schoolName, createdAt, content}) => {
+const PostHistory = ({username, schoolName, createdAt, content, postId, onChange}) => {
 
     return (
         <div>
@@ -18,14 +18,9 @@ const Post = ({username, schoolName, createdAt, content}) => {
                 </div>
                 <p className='normal post'>{content}</p>
                 <button className='show-response-button'>Show Responses</button>
-                <div className='postInfo'>
-                    <div className='postInfo left'>
-                        <button className = 'like-button'><FaThumbsUp /></button>
-                        <button className = 'dislike-button'><FaThumbsDown /></button>
-                    </div>
-                    <div className='postInfo right'>
-                        <button className = 'reply-button'><FaReply /></button>
-                    </div>
+
+                <div style={{display: 'flex', justifyContent: 'center'}}>
+                    <button className = 'delete-button' onClick={() => onChange(postId)}><FaTimes /></button>
                 </div>
             </div>
         </div>
@@ -34,4 +29,4 @@ const Post = ({username, schoolName, createdAt, content}) => {
 
 };
 
-export default Post;
+export default PostHistory;

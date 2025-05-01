@@ -17,7 +17,7 @@ const Home = () => {
                     <p className="normal">Any student who wants to better understand their class material and connect with their peers.</p>
                     <hr className="line"></hr>
                     <h2 className="subheading">How Does It Help You?</h2>
-                    <p className="normal" style={{ marginBottom: '0px' }}><li><b>No more searching through irrelevant posts</b>. You can can quickly find discussions tailored to your exact courses.</li></p><br/>
+                    <p className="normal" style={{ marginBottom: '0px' }}><li><b>No more searching through irrelevant posts</b>. You can quickly find discussions tailored to your exact courses.</li></p><br/>
                     <p className="normal" style={{ marginTop: '0px' }}><li><b>Becoming a learning leader</b>. Share what you know and empower others to succeed alongside you.</li></p>
                 </div>
             </div>

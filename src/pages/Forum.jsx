@@ -1,20 +1,23 @@
+import React, { useState, useEffect, useCallback } from 'react';
 import NavBar from '../components/NavBar.jsx';
 import Post from '../components/Post.jsx';
 import CreatePostButton from '../components/CreatePostButton.jsx';
 import FilterPost from '../components/FilterPost.jsx';
+import * as tf from '@tensorflow/tfjs';
+import * as use from '@tensorflow-models/universal-sentence-encoder';
 import '../App.css';
 import '../styles/Forum.css';
-import { FaSearch, FaFilter } from 'react-icons/fa';
-import { useState, useEffect, useCallback } from 'react';
+import { FaSearch, FaFilter, FaTimes } from 'react-icons/fa';
 
 const Forum = () => {
     const [posts, setPosts] = useState([]);
     const [filteredPosts, setFilteredPosts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState("");
+    const [error, setError] = useState('');
     const [showFilterModal, setShowFilterModal] = useState(false);
-    // eslint-disable-next-line
     const [filters, setFilters] = useState({ universities: [], classes: [] });
+    const [searchText, setSearchText] = useState('');
+    const [model, setModel] = useState(null);
 
     const fetchPosts = useCallback(async () => {
         try {
@@ -25,11 +28,11 @@ const Forum = () => {
                 setPosts(data.posts);
                 setFilteredPosts(data.posts);
             } else {
-                setError(data.error || 'Failed to fetch post');
+                setError(data.error || 'Failed to fetch posts');
             }
-        } catch (error){
-            console.error('Error fetching post:', error);
-            setError('Could not fetch post. Try again later');
+        } catch (err) {
+            console.error('Error fetching posts:', err);
+            setError('Could not fetch posts. Try again later.');
         } finally {
             setLoading(false);
         }
@@ -39,20 +42,53 @@ const Forum = () => {
         fetchPosts();
     }, [fetchPosts]);
 
-    const handleApplyFilter = (newFilters) => {
-        setFilters(newFilters);
-        const { universities, classes } = newFilters;
+    useEffect(() => {
+        const loadModel = async () => {
+            const loadedModel = await use.load();
+            setModel(loadedModel);
+        };
+        loadModel();
+    }, []);
 
-        const filtered = posts.filter(post => {
-            const matchUniversity = universities.length === 0 || universities.includes(post.school_name);
+    const applyAllFilters = async (filtersToApply, search = searchText) => {
+        const { universities, classes } = filtersToApply;
+        let filtered = posts.filter(post => {
+            const matchUni = universities.length === 0 || universities.includes(post.school_name);
             const matchClass = classes.length === 0 || classes.includes(post.class_name);
-            return matchUniversity && matchClass;
+            return matchUni && matchClass;
         });
+
+        if (search.trim() && model) {
+            const embeddings = await model.embed([search, ...filtered.map(p => p.content)]);
+            const queryEmbedding = embeddings.slice([0, 0], [1]);
+            const postEmbeddings = embeddings.slice([1]);
+
+            const similarities = await tf.matMul(postEmbeddings, queryEmbedding, false, true).data();
+
+            filtered = filtered.map((post, idx) => ({
+                ...post,
+                similarity: similarities[idx],
+            }))
+            .sort((a, b) => b.similarity - a.similarity); // most relevant first
+        }
 
         setFilteredPosts(filtered);
     };
 
-    // Extract unique universities and classes from all posts
+    const handleApplyFilter = (newFilters) => {
+        setFilters(newFilters);
+        applyAllFilters(newFilters);
+    };
+
+    const handleSearch = () => {
+        applyAllFilters(filters);
+    };
+
+    const handleClearSearch = () => {
+        setSearchText('');
+        applyAllFilters(filters, '');
+    };
+
     const allUniversities = [...new Set(posts.map(p => p.school_name))];
     const allClasses = [...new Set(posts.map(p => p.class_name))];
 
@@ -60,11 +96,23 @@ const Forum = () => {
         <>
             <NavBar />
             <div className='forum-container'>
-                <div className='search-container'>
-                    <input className='search-input' type='text' placeholder='Search'></input>
-                    <button className='search-button'><FaSearch /></button>
-                    <button className='filter-button' onClick={() => setShowFilterModal(true)}><FaFilter /></button>
-                </div>
+            <div className='search-container'>
+                <input
+                    className='search-input'
+                    type='text'
+                    value={searchText}
+                    onChange={(e) => setSearchText(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                    placeholder='Search'
+                />
+                
+                {searchText && (
+                    <button className='search-button' onClick={handleClearSearch}><FaTimes /></button>
+                )}
+                
+                <button className='search-button' onClick={handleSearch}><FaSearch /></button>
+                <button className='filter-button' onClick={() => setShowFilterModal(true)}><FaFilter /></button>
+            </div>
 
                 <hr className='line' />
 

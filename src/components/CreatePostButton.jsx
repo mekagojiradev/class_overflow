@@ -74,6 +74,9 @@ const FloatingAddQuestionButton = ({handlePostCreation}) => {
       if (data.success) {
         setSuccess(true); // Show success message
         console.log("Post created successfully");
+        // Reset form fields
+        setFormData({content: "", class: ""});
+        setAnonymous(false);
         // Optionally redirect after success, if desired
         setShowForm(false);
 

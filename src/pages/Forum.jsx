@@ -1,69 +1,101 @@
 import NavBar from '../components/NavBar.jsx';
 import Post from '../components/Post.jsx';
 import CreatePostButton from '../components/CreatePostButton.jsx';
+import FilterPost from '../components/FilterPost.jsx';
 import '../App.css';
 import '../styles/Forum.css';
 import { FaSearch, FaFilter } from 'react-icons/fa';
 import { useState, useEffect, useCallback } from 'react';
 
 const Forum = () => {
-    const [posts, setPosts] = useState([]); // state to hold the fetched post
-    const [loading, setLoading] = useState(true); // state to track loading status
-    const [error, setError] = useState(""); // state to track any fetch errors
+    const [posts, setPosts] = useState([]);
+    const [filteredPosts, setFilteredPosts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+    const [showFilterModal, setShowFilterModal] = useState(false);
+    // eslint-disable-next-line
+    const [filters, setFilters] = useState({ universities: [], classes: [] });
 
-    // Use useCallback to memoize the fetchPosts function
     const fetchPosts = useCallback(async () => {
         try {
             const response = await fetch("http://localhost/class_overflow/api/show_post.php");
             const data = await response.json();
 
             if (data.success) {
-                setPosts(data.posts); // update the post state with fetched data
+                setPosts(data.posts);
+                setFilteredPosts(data.posts);
             } else {
                 setError(data.error || 'Failed to fetch post');
             }
-        } catch (error){ // catch any error during the fetch process
+        } catch (error){
             console.error('Error fetching post:', error);
-            setError('Could not fetch post. Try again later')
+            setError('Could not fetch post. Try again later');
         } finally {
-            setLoading(false); // loading is finished if it was successful in getting the post or there was an error
+            setLoading(false);
         }
-        
-    }, []); // left an empty array since it does not depend on external variable
+    }, []);
 
     useEffect(() => {
         fetchPosts();
-    }, [fetchPosts]); // have a dependency array to re-run the code if the fetchPosts function changes
-    
+    }, [fetchPosts]);
+
+    const handleApplyFilter = (newFilters) => {
+        setFilters(newFilters);
+        const { universities, classes } = newFilters;
+
+        const filtered = posts.filter(post => {
+            const matchUniversity = universities.length === 0 || universities.includes(post.school_name);
+            const matchClass = classes.length === 0 || classes.includes(post.class_name);
+            return matchUniversity && matchClass;
+        });
+
+        setFilteredPosts(filtered);
+    };
+
+    // Extract unique universities and classes from all posts
+    const allUniversities = [...new Set(posts.map(p => p.school_name))];
+    const allClasses = [...new Set(posts.map(p => p.class_name))];
+
     return (
         <>
             <NavBar />
-            <div className='forum-container'> {/* add search bar */}
+            <div className='forum-container'>
                 <div className='search-container'>
                     <input className='search-input' type='text' placeholder='Search'></input>
-                    <button className='search-button'><FaSearch/></button>
-                    <button className='filter-button'><FaFilter/></button>
+                    <button className='search-button'><FaSearch /></button>
+                    <button className='filter-button' onClick={() => setShowFilterModal(true)}><FaFilter /></button>
                 </div>
-                <hr className='line'></hr>
-                { loading ? (
+
+                <hr className='line' />
+
+                {showFilterModal && (
+                    <FilterPost
+                        universities={allUniversities}
+                        classes={allClasses}
+                        onApply={handleApplyFilter}
+                        onClose={() => setShowFilterModal(false)}
+                    />
+                )}
+
+                {loading ? (
                     <div>Loading the posts...</div>
                 ) : error ? (
                     <div>Error: {error}</div>
                 ) : (
-                    posts.map((post) => (
+                    filteredPosts.map((post) => (
                         <Post
-                        // get the info from the database and pass them as props for Post.jsx
-                        key={post.question_id} // question id
-                        username = {post.title}// if user want to display their username or just anonymous
-                        schoolName = {post.school_name}// school name
-                        createdAt = {post.created_at} // when the post was created
-                        content = {post.content} // post content
-                        ></Post>
-                    )))}
-                <CreatePostButton handlePostCreation = {fetchPosts} />  {/* pass the fetchPosts function as a prop*/}
+                            key={post.question_id}
+                            username={post.title}
+                            schoolName={post.school_name}
+                            createdAt={post.created_at}
+                            content={post.content}
+                        />
+                    ))
+                )}
+
+                <CreatePostButton handlePostCreation={fetchPosts} />
             </div>
         </>
-
     );
 };
 

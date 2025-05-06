@@ -12,7 +12,7 @@ const Post = ({ id, username, schoolName, createdAt, content }) => {
   const [hasLiked, setHasLiked] = useState(false);
   const [hasDisliked, setHasDisliked] = useState(false);
   const [showResponses, setShowResponses] = useState(false);
-  const [responseRefresh, setResponseRefresh] = useState(false); // ✅ Isolated refresh
+  const [responseRefresh, setResponseRefresh] = useState(false);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -55,7 +55,7 @@ const Post = ({ id, username, schoolName, createdAt, content }) => {
   const handleLike = () => {
     if (!userId) return console.error('User not logged in');
     sendUpdate(
-      { question_id: id, user_id: userId, like: hasLiked ? 0 : 1, dislike: 0 },
+      { post_id: id, user_id: userId, like: hasLiked ? 0 : 1, dislike: 0 },
       () => {
         setHasLiked(prev => !prev);
         if (hasDisliked) setHasDisliked(false);
@@ -66,7 +66,7 @@ const Post = ({ id, username, schoolName, createdAt, content }) => {
   const handleDislike = () => {
     if (!userId) return console.error('User not logged in');
     sendUpdate(
-      { question_id: id, user_id: userId, like: 0, dislike: hasDisliked ? 0 : 1 },
+      { post_id: id, user_id: userId, like: 0, dislike: hasDisliked ? 0 : 1 },
       () => {
         setHasDisliked(prev => !prev);
         if (hasLiked) setHasLiked(false);

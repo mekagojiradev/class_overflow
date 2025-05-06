@@ -76,6 +76,7 @@ CREATE TABLE responses (
     question_id INT,
     parent_response_id INT,
     like_count INT DEFAULT 0,
+    dislike_count INT DEFAULT 0,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
     FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE,

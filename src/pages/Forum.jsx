@@ -144,8 +144,6 @@ const Forum = () => {
                     ))
                 )}
 
-                <Response />
-
                 <CreatePostButton handlePostCreation={fetchPosts} />
             </div>
         </>

@@ -1,7 +1,8 @@
 import '../styles/Post.css';
 import '../App.css';
-import { FaThumbsUp, FaThumbsDown, FaReply } from 'react-icons/fa';
+import { FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
+import CreateResponseButton from './CreateResponseButton';
 
 const Post = ({ id, username, schoolName, createdAt, content }) => {
     const [likes, setLikes] = useState(0);
@@ -51,7 +52,7 @@ const Post = ({ id, username, schoolName, createdAt, content }) => {
                         <button className = 'dislike-button'><FaThumbsDown /> {dislikes}</button>
                     </div>
                     <div className='postInfo right'>
-                        <button className = 'reply-button'><FaReply /></button>
+                        <CreateResponseButton />
                     </div>
                 </div>
             </div>

@@ -3,6 +3,7 @@ import '../App.css';
 import { FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
 import CreateResponseButton from './CreateResponseButton';
+import ResponseList from './ResponseList';
 
 const Post = ({ id, username, schoolName, createdAt, content }) => {
   const [likes, setLikes] = useState(0);
@@ -10,6 +11,8 @@ const Post = ({ id, username, schoolName, createdAt, content }) => {
   const [userId, setUserId] = useState(null);
   const [hasLiked, setHasLiked] = useState(false);
   const [hasDisliked, setHasDisliked] = useState(false);
+  const [showResponses, setShowResponses] = useState(false);
+  const [responseRefresh, setResponseRefresh] = useState(false); // ✅ Isolated refresh
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -52,7 +55,7 @@ const Post = ({ id, username, schoolName, createdAt, content }) => {
   const handleLike = () => {
     if (!userId) return console.error('User not logged in');
     sendUpdate(
-      { post_id: id, user_id: userId, like: hasLiked ? 0 : 1, dislike: 0 },
+      { question_id: id, user_id: userId, like: hasLiked ? 0 : 1, dislike: 0 },
       () => {
         setHasLiked(prev => !prev);
         if (hasDisliked) setHasDisliked(false);
@@ -63,12 +66,16 @@ const Post = ({ id, username, schoolName, createdAt, content }) => {
   const handleDislike = () => {
     if (!userId) return console.error('User not logged in');
     sendUpdate(
-      { post_id: id, user_id: userId, like: 0, dislike: hasDisliked ? 0 : 1 },
+      { question_id: id, user_id: userId, like: 0, dislike: hasDisliked ? 0 : 1 },
       () => {
         setHasDisliked(prev => !prev);
         if (hasLiked) setHasLiked(false);
       }
     );
+  };
+
+  const triggerResponseRefresh = () => {
+    setResponseRefresh(prev => !prev);
   };
 
   return (
@@ -84,7 +91,15 @@ const Post = ({ id, username, schoolName, createdAt, content }) => {
           </div>
         </div>
         <p className='normal post'>{content}</p>
-        <button className='show-response-button'>Show Responses</button>
+
+        <button className='show-response-button' onClick={() => setShowResponses(!showResponses)}>
+          {showResponses ? "Hide Responses" : "Show Responses"}
+        </button>
+
+        {showResponses && (
+          <ResponseList question_id={id} refreshKey={responseRefresh} />
+        )}
+
         <div className='postInfo'>
           <div className='postInfo left'>
             <button className='like-button' onClick={handleLike}>
@@ -95,7 +110,7 @@ const Post = ({ id, username, schoolName, createdAt, content }) => {
             </button>
           </div>
           <div className='postInfo right'>
-            <CreateResponseButton />
+            <CreateResponseButton question_id={id} handlePostCreation={triggerResponseRefresh} />
           </div>
         </div>
       </div>

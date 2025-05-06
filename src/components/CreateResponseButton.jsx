@@ -1,116 +1,74 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "../App.css";
 import { FaReply } from 'react-icons/fa';
 
-const CreateResponseButton = ({handlePostCreation}) => {
-  const [showForm, setShowForm] = useState(false); // Toggle form visibility
-  const [formData, setFormData] = useState({
-    content: "",
-  });
-  const [error, setError] = useState(""); // For error handling
-  const [success, setSuccess] = useState(false); // For success state
-  const [username, setUsername] = useState(""); // For storing the username
+const CreateResponseButton = ({ question_id = null, parent_response_id = null, handlePostCreation }) => {
+  const [showForm, setShowForm] = useState(false);
+  const [formData, setFormData] = useState({ content: "" });
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
 
-  // Get user info from localStorage when the component mounts
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    console.log("User object from localStorage:", user); // Debugging step to check the object structure
-    if (user) {
-      setUsername(user.username); // Set the username from localStorage
-    }
-  }, []);
-
-  // Handle input changes
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({ content: e.target.value });
   };
 
-  // Submit the form to create a post
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Get user_id and question_id from localStorage
     const user = JSON.parse(localStorage.getItem("user"));
     const user_id = user ? user.id : null;
-    const question_id = user ? user.question_id : null;
 
-    // Prepare the data for submission
     const postData = {
       content: formData.content,
-      user_id: user_id,
-      question_id: question_id,
+      user_id,
+      question_id,
+      parent_response_id,
     };
 
     try {
       const response = await fetch("http://localhost/class_overflow/api/create_response.php", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(postData),
       });
 
       const data = await response.json();
 
-      // Handle success or error based on the response
       if (data.success) {
-        setSuccess(true); // Show success message
-        console.log("Post created successfully");
-        // Reset form fields
-        setFormData({content: ""});
-
-        // Optionally redirect after success, if desired
+        setSuccess(true);
+        setFormData({ content: "" });
         setShowForm(false);
-
-        if (handlePostCreation) {
-          // call the function to re-fetch the post
-          handlePostCreation(); // don't need to refresh the page to see the post after creation
-        }
-        
+        if (handlePostCreation) handlePostCreation();
       } else {
-        setError(data.error || "Error creating post");
+        setError(data.error || "Error creating response");
       }
-    } catch (error) {
-      console.error("There was an error during post creation", error);
-      setError("Something went wrong. Please try again.");
+    } catch (err) {
+      console.error("Submit error", err);
+      setError("Something went wrong");
     }
   };
 
   return (
     <>
-      {/* Actual reply button */}
-      <button className = 'reply-button' onClick={() => setShowForm(true)}><FaReply /></button>
+      <button className="reply-button" onClick={() => setShowForm(true)}>
+        <FaReply />
+      </button>
 
-      {/* Create Post Form */}
       {showForm && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <button
-              className="close-button"
-              onClick={() => setShowForm(false)}
-            >
-              ×
-            </button>
-
+            <button className="close-button" onClick={() => setShowForm(false)}>×</button>
             <h2>Create a New Response</h2>
-
-            {error && <p className="message" style={{ color: "red" }}>{error}</p>}
-            {success && <p className="message" style={{ color: "green" }}>Response created successfully!</p>}
-
+            {error && <p style={{ color: "red" }}>{error}</p>}
+            {success && <p style={{ color: "green" }}>Response created successfully!</p>}
             <form className="form" onSubmit={handleSubmit}>
-              <label className="label">
-                Response:
-                <textarea
-                  name="content"
-                  className="input"
-                  value={formData.content}
-                  onChange={handleChange}
-                  required
-                />
-              </label>
-
-              <button type="submit" className="button">Create Response</button>
+              <textarea
+                name="content"
+                value={formData.content}
+                onChange={handleChange}
+                required
+              />
+              <button type="submit" className="button">Submit</button>
             </form>
           </div>
         </div>

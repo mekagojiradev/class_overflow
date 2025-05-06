@@ -18,12 +18,25 @@ const CreateResponseButton = ({ question_id = null, parent_response_id = null, h
     const user = JSON.parse(localStorage.getItem("user"));
     const user_id = user ? user.id : null;
 
+    if (!user_id) {
+      setError("You must be logged in to respond.");
+      return;
+    }
+
+    // ✅ Only send ONE of the fields, never both
     const postData = {
       content: formData.content,
-      user_id,
-      question_id,
-      parent_response_id,
+      user_id: user_id,
     };
+
+    if (question_id && !parent_response_id) {
+      postData.question_id = question_id;
+    } else if (!question_id && parent_response_id) {
+      postData.parent_response_id = parent_response_id;
+    } else {
+      setError("Invalid target. Cannot respond to both a question and a response.");
+      return;
+    }
 
     try {
       const response = await fetch("http://localhost/class_overflow/api/create_response.php", {
@@ -44,7 +57,7 @@ const CreateResponseButton = ({ question_id = null, parent_response_id = null, h
       }
     } catch (err) {
       console.error("Submit error", err);
-      setError("Something went wrong");
+      setError("Something went wrong. Please try again.");
     }
   };
 

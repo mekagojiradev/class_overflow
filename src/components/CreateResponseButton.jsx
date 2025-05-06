@@ -9,7 +9,6 @@ const CreateResponseButton = ({handlePostCreation}) => {
   });
   const [error, setError] = useState(""); // For error handling
   const [success, setSuccess] = useState(false); // For success state
-  const [anonymous, setAnonymous] = useState(false); // For the anonymous checkbox
   const [username, setUsername] = useState(""); // For storing the username
 
   // Get user info from localStorage when the component mounts
@@ -27,39 +26,24 @@ const CreateResponseButton = ({handlePostCreation}) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handle anonymous checkbox change
-  const handleAnonymousChange = (e) => {
-    setAnonymous(e.target.checked);
-  };
-
   // Submit the form to create a post
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Get user_id and school_id from localStorage
+    // Get user_id and question_id from localStorage
     const user = JSON.parse(localStorage.getItem("user"));
     const user_id = user ? user.id : null;
-    const school_id = user ? user.school_id : null;
-
-    // Check if user_id and school_id are available
-    if (!user_id || !school_id) {
-      setError("User is not logged in or missing school information.");
-      return;
-    }
-
-    // Set title based on the anonymous checkbox or username
-    const title = anonymous ? "anonymous" : username || "anonymous";
+    const question_id = user ? user.question_id : null;
 
     // Prepare the data for submission
     const postData = {
-      title: title,
       content: formData.content,
       user_id: user_id,
-      school_id: school_id,
+      question_id: question_id,
     };
 
     try {
-      const response = await fetch("http://localhost/class_overflow/api/create_post.php", {
+      const response = await fetch("http://localhost/class_overflow/api/create_response.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -74,8 +58,8 @@ const CreateResponseButton = ({handlePostCreation}) => {
         setSuccess(true); // Show success message
         console.log("Post created successfully");
         // Reset form fields
-        setFormData({content: "", class: ""});
-        setAnonymous(false);
+        setFormData({content: ""});
+
         // Optionally redirect after success, if desired
         setShowForm(false);
 
@@ -124,15 +108,6 @@ const CreateResponseButton = ({handlePostCreation}) => {
                   onChange={handleChange}
                   required
                 />
-              </label>
-
-              <label className="checkbox-label">
-                <input
-                  type="checkbox"
-                  checked={anonymous}
-                  onChange={handleAnonymousChange}
-                />
-                Anonymous?
               </label>
 
               <button type="submit" className="button">Create Response</button>

@@ -19,6 +19,7 @@ const Forum = () => {
     const [filters, setFilters] = useState({ universities: [], classes: [] });
     const [searchText, setSearchText] = useState('');
     const [model, setModel] = useState(null);
+    const [searchPost, setSearchPost] = useState(false);
 
     const fetchPosts = useCallback(async () => {
         try {
@@ -52,6 +53,8 @@ const Forum = () => {
     }, []);
 
     const applyAllFilters = async (filtersToApply, search = searchText) => {
+        setSearchPost(true);
+
         const { universities, classes } = filtersToApply;
         let filtered = posts.filter(post => {
             const matchUni = universities.length === 0 || universities.includes(post.school_name);
@@ -74,6 +77,7 @@ const Forum = () => {
         }
 
         setFilteredPosts(filtered);
+        setSearchPost(false);
     };
 
     const handleApplyFilter = (newFilters) => {
@@ -130,8 +134,10 @@ const Forum = () => {
                     <div>Loading the posts...</div>
                 ) : error ? (
                     <div>Error: {error}</div>
-                ) : (
-                    filteredPosts.map((post) => (
+                ) : searchPost ? (
+                    <div>Searching for the posts...</div>
+
+                ) : (filteredPosts.map((post) => (
                         <Post
                             key={post.question_id}
                             id={post.question_id}

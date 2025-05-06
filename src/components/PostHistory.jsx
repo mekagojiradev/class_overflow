@@ -17,7 +17,6 @@ const PostHistory = ({username, schoolName, createdAt, content, postId, onChange
                     </div>
                 </div>
                 <p className='normal post'>{content}</p>
-                <button className='show-response-button'>Show Responses</button>
 
                 <div style={{display: 'flex', justifyContent: 'center'}}>
                     <button className = 'delete-button' onClick={() => onChange(postId)}><FaTimes /></button>

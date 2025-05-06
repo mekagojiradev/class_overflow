@@ -92,14 +92,6 @@ const Post = ({ id, username, schoolName, createdAt, content }) => {
         </div>
         <p className='normal post'>{content}</p>
 
-        <button className='show-response-button' onClick={() => setShowResponses(!showResponses)}>
-          {showResponses ? "Hide Responses" : "Show Responses"}
-        </button>
-
-        {showResponses && (
-          <ResponseList question_id={id} refreshKey={responseRefresh} />
-        )}
-
         <div className='postInfo'>
           <div className='postInfo left'>
             <button className='like-button' onClick={handleLike}>
@@ -113,6 +105,14 @@ const Post = ({ id, username, schoolName, createdAt, content }) => {
             <CreateResponseButton question_id={id} handlePostCreation={triggerResponseRefresh} />
           </div>
         </div>
+
+        <button className='show-response-button' onClick={() => setShowResponses(!showResponses)}>
+          {showResponses ? "Hide Responses" : "Show Responses"}
+        </button>
+
+        {showResponses && (
+          <ResponseList question_id={id} refreshKey={responseRefresh} />
+        )}
       </div>
     </div>
   );

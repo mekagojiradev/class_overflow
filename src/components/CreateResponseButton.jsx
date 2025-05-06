@@ -23,7 +23,6 @@ const CreateResponseButton = ({ question_id = null, parent_response_id = null, h
       return;
     }
 
-    // ✅ Only send ONE of the fields, never both
     const postData = {
       content: formData.content,
       user_id: user_id,

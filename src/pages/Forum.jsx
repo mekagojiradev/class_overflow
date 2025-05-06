@@ -133,6 +133,8 @@ const Forum = () => {
                     filteredPosts.map((post) => (
                         <Post
                             key={post.question_id}
+                            id={post.question_id}
+                            type='question'
                             username={post.title}
                             schoolName={post.school_name}
                             createdAt={post.created_at}

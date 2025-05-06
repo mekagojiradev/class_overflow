@@ -1,15 +1,14 @@
 <?php
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
-require 'db.php'; // Include the database connection
-
-// changed this line bc ayush was having problem loading
 header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json");
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+require 'db.php'; // Include the database connection
 
 // If it's a preflight request, return early
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {

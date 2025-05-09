@@ -23,7 +23,7 @@ CREATE TABLE classes (
     name VARCHAR(255) NOT NULL
 );
 
--- Join table: schools <-> classes (many-to-many)
+-- Join table: schools <-> classes (many-to-many) NOTE!!! This isn't currently functional. This is here for future implementation.
 CREATE TABLE school_classes (
     class_id INT NULL,
     school_id INT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE users (
     FOREIGN KEY (school_id) REFERENCES schools(id) ON DELETE SET NULL
 );
 
--- Join table: users <-> classes (many-to-many)
+-- Join table: users <-> classes (many-to-many) NOTE!!! This isn't currently functional. This is here for future implementation.
 CREATE TABLE user_classes (
     user_id INT NULL,
     class_id INT NULL,
@@ -96,7 +96,7 @@ CREATE TABLE likes_question (
     FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE
 );
 
--- Likes on Responses
+-- Likes on Responses NOTE!!! This isn't currently functional. This is here for future implementation.
 CREATE TABLE likes_response (
     user_id INT,
     response_id INT,
@@ -114,7 +114,7 @@ CREATE TABLE dislikes_question (
     FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE
 );
 
--- Dislikes on Responses
+-- Dislikes on Responses NOTE!!! This isn't currently functional. This is here for future implementation.
 CREATE TABLE dislikes_response (
     user_id INT,
     response_id INT,

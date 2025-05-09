@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import NavBar from '../components/NavBar.jsx';
 import Post from '../components/Post.jsx';
-import Response from '../components/Response.jsx';
 import CreatePostButton from '../components/CreatePostButton.jsx';
 import FilterPost from '../components/FilterPost.jsx';
 import * as tf from '@tensorflow/tfjs';

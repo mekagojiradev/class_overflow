@@ -2,7 +2,7 @@
 Many students in MTSU often have academic doubts and need a space to get it clarified. Our platform aims to solve that so students in universities can get their own questions answered. Inspired by Stack Overflow, we decided to build Class Overflow which is a forum style web application designed for students to share questions, respond to peers, and engage in academic discussions. The platform allows users to create accounts, log in, post questions, and respond to others’ posts. It supports upvoting and downvoting questions promoting useful content in the community. In the future, we aim to extend upvoting and downvoting to responses also, along with support for threaded (recursive) replies to have more deeper and organized discussions
 
 # Live Demo
-https://classoverflow.vercel.app/forum
+https://classoverflow.vercel.app
 
 # How to get it started!
 1. Put the zip file in htdocs folder and extract it. (assuming you are using XAMPP)
